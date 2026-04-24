@@ -32,49 +32,46 @@ func (list *LinkedList) Add(value int) {
 
 func (list *LinkedList) AddOnIndex(value int, index int) error {
 	if index < 0 {
-		return errors.New("index não pode ser negativo.")
+		return errors.New("index não pode ser negativo")
 	}
 	if index > list.inserted {
-		return errors.New("index acima do range aceitável.")
+		return errors.New("index acima da faixa aceitável")
 	}
 
 	newNode := &Node{value, nil}
-	if index == 0 { // também cobre o caso que a lista está vazia
+
+	if index == 0 { // caso list vazia e index no começo
 		newNode.next = list.head
 		list.head = newNode
-	} else {
+	} else { // caso index no meio e final
 		prevNode := list.head
 		for i := 0; i < index-1; i++ {
 			prevNode = prevNode.next
 		}
-
-		if index == list.inserted { //fim
-			prevNode.next = newNode
-		} else {
-			newNode.next = prevNode.next
-			prevNode.next = newNode
-		}
+		newNode.next = prevNode.next
+		prevNode.next = newNode
 	}
+
 	list.inserted++
 	return nil
 }
 
 func (list *LinkedList) RemoveOnIndex(index int) error {
 	if index < 0 {
-		return errors.New("index não pode ser negativo.")
+		return errors.New("index não pode ser negativo")
 	}
 	if index >= list.inserted {
-		return errors.New("index acima do range aceitável.")
+		return errors.New("index acima da faixa aceitável")
 	}
 
-	if index == 0 { // começo e lista com um único elemento
-		list.head = list.head.next // também cobre o caso do único elemento
-	} else { // meio e fim
+	if index == 0 { // caso list com elemento único e index no começo
+		list.head = list.head.next
+	} else { // caso index no final e meio
 		prevNode := list.head
 		for i := 0; i < index-1; i++ {
 			prevNode = prevNode.next
 		}
-		prevNode.next = prevNode.next.next // também combre o caso do fim
+		prevNode.next = prevNode.next.next
 	}
 
 	list.inserted--
@@ -83,10 +80,10 @@ func (list *LinkedList) RemoveOnIndex(index int) error {
 
 func (list *LinkedList) Get(index int) (int, error) {
 	if index < 0 {
-		return -1, errors.New("index não pode ser negativo.")
+		return -1, errors.New("index não pode ser negativo")
 	}
 	if index >= list.inserted {
-		return -1, errors.New("index acima do range aceitável.")
+		return -1, errors.New("index acima da faixa aceitável")
 	}
 
 	curNode := list.head
@@ -98,10 +95,10 @@ func (list *LinkedList) Get(index int) (int, error) {
 
 func (list *LinkedList) Set(value int, index int) error {
 	if index < 0 {
-		return errors.New("index não pode ser negativo.")
+		return errors.New("index não pode ser negativo")
 	}
 	if index >= list.inserted {
-		return errors.New("index acima do range aceitável.")
+		return errors.New("index acima da faixa aceitável")
 	}
 
 	curNode := list.head

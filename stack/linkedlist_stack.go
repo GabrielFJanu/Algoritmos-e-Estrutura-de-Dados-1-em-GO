@@ -1,8 +1,6 @@
 package stack
 
-import (
-	"errors"
-)
+import "errors"
 
 type Node struct {
 	value int
@@ -10,36 +8,37 @@ type Node struct {
 }
 
 type LinkedListStack struct {
-	head     *Node
+	top      *Node
 	inserted int
 }
 
 func (stack *LinkedListStack) Push(value int) {
 	newNode := &Node{value, nil}
-
-	newNode.next = stack.head
-	stack.head = newNode // stack vazia e não fazia
+	newNode.next = stack.top
+	stack.top = newNode
 
 	stack.inserted++
 }
 
 func (stack *LinkedListStack) Pop() (int, error) {
 	if stack.inserted == 0 {
-		return -1, errors.New("Não se pode dar Pop em uma stack vazia.")
+		return -1, errors.New("Não se pode dar Pop em uma stack vazia")
 	}
 
-	value := stack.head.value
-	stack.head = stack.head.next
+	value := stack.top.value
+
+	stack.top = stack.top.next
+
 	stack.inserted--
 	return value, nil
 }
 
 func (stack *LinkedListStack) Peek() (int, error) {
 	if stack.inserted == 0 {
-		return -1, errors.New("Não se pode dar Pop em uma stack vazia.")
+		return -1, errors.New("Não se pode dar Pop em uma stack vazia")
 	}
 
-	return stack.head.value, nil
+	return stack.top.value, nil
 }
 
 func (stack *LinkedListStack) IsEmpty() bool {

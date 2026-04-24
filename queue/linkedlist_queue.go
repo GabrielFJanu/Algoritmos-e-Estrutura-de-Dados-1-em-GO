@@ -8,35 +8,37 @@ type Node struct {
 }
 
 type LinkedListQueue struct {
-	head     *Node
-	tail     *Node
+	front    *Node
+	back     *Node
 	inserted int
 }
 
 func (queue *LinkedListQueue) Enqueue(value int) {
 	newNode := &Node{value, nil}
 
-	if queue.inserted == 0 { // queue vazia
-		queue.head = newNode
-	} else { // queue não vazia
-		queue.tail.next = newNode
+	if queue.inserted == 0 {
+		queue.front = newNode
+		queue.back = newNode
+	} else {
+		queue.back.next = newNode
+		queue.back = newNode
 	}
-	queue.tail = newNode
-
 	queue.inserted++
 }
 
 func (queue *LinkedListQueue) Dequeue() (int, error) {
 	if queue.inserted == 0 {
-		return -1, errors.New("Não se pode dar Dequeue em uma queue vazia.")
+		return -1, errors.New("Não se pode dar Dequeue em uma queue vazia")
 	}
 
-	value := queue.head.value
+	value := queue.front.value
 
-	if queue.inserted == 1 { // elemento único
-		queue.tail = nil
+	if queue.inserted == 1 {
+		queue.front = nil
+		queue.back = nil
+	} else {
+		queue.front = queue.front.next
 	}
-	queue.head = queue.head.next // elemento único e resto
 
 	queue.inserted--
 	return value, nil
@@ -44,10 +46,10 @@ func (queue *LinkedListQueue) Dequeue() (int, error) {
 
 func (queue *LinkedListQueue) Front() (int, error) {
 	if queue.inserted == 0 {
-		return -1, errors.New("Não se pode dar Front em uma queue vazia.")
+		return -1, errors.New("Não se pode dar Dequeue em uma queue vazia")
 	}
 
-	return queue.head.value, nil
+	return queue.front.value, nil
 }
 
 func (queue *LinkedListQueue) IsEmpty() bool {

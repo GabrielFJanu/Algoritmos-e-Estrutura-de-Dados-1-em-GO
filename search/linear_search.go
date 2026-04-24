@@ -1,8 +1,8 @@
 package search
 
-func LinearSearch(array []int, value int) int {
-	for i := 0; i < len(array); i++ {
-		if array[i] == value {
+func LinearSearch(v []int, value int) int {
+	for i := 0; i < len(v); i++ {
+		if v[i] == value {
 			return i
 		}
 	}
