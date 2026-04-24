@@ -17,11 +17,15 @@ type LinkedList struct {
 func (list *LinkedList) Add(value int) {
 	newNode := &Node{value, nil}
 
-	curNode := list.head
-	for i := 0; i < list.inserted; i++ {
-		curNode = curNode.next
+	if list.inserted == 0 {
+		list.head = newNode
+	} else {
+		prevNode := list.head
+		for i := 0; i < list.inserted-1; i++ {
+			prevNode = prevNode.next
+		}
+		prevNode.next = newNode
 	}
-	curNode.next = newNode
 
 	list.inserted++
 }

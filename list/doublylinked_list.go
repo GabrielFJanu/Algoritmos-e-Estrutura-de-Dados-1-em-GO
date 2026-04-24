@@ -1,6 +1,8 @@
 package list
 
-import "errors"
+import (
+	"errors"
+)
 
 type Node2P struct {
 	prev  *Node2P
@@ -136,4 +138,13 @@ func (list *DoublyLinkedList) Set(value int, index int) error {
 
 func (list *DoublyLinkedList) Size() int {
 	return list.inserted
+}
+
+func (list *DoublyLinkedList) Reverse() {
+	curNode := list.head
+	for i := 0; i < list.inserted; i++ {
+		curNode.next, curNode.prev = curNode.prev, curNode.next
+		curNode = curNode.prev
+	}
+	list.head, list.tail = list.tail, list.head
 }

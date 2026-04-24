@@ -96,3 +96,9 @@ func (list *ArrayList) Set(value int, index int) error {
 func (list *ArrayList) Size() int {
 	return list.inserted
 }
+
+func (list *ArrayList) Reverse() {
+	for i := 0; i < list.inserted/2; i++ {
+		list.values[i], list.values[list.inserted-1-i] = list.values[list.inserted-1-i], list.values[i]
+	}
+}
